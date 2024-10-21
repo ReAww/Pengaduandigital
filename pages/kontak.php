@@ -128,7 +128,7 @@
             <div class="contact-card">
                 <div class="card-header">Informasi Sekolah</div>
                 <div class="principal-info">
-                    <img src="images/kepsek.png" alt="Foto Kepala Sekolah" class="principal-photo">
+                    <img src="assets/images/kepsek.png" alt="Foto Kepala Sekolah" class="principal-photo">
                     <div class="principal-details">
                         <div class="principal-name">R. Prawoto Hari Wibowo, M.Pd</div>
                         <div class="principal-title">Kepala SMK Negeri 6 Kota Bekasi</div>

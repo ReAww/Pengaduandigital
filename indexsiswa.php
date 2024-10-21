@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -236,7 +239,7 @@
     <header>
         <div class="header-content">
             <div class="logo">
-                <img src="images/logo6.png" alt="Logo">
+                <img src="assets/images/logo6.png" alt="Logo">
                 <div class="logo-text">
                     <span class="title">PENGADUAN DIGITAL</span>
                     <span class="desc">SMK NEGERI 6 KOTA BEKASI</span>
@@ -284,6 +287,9 @@
                 case 'sarana';
                     include "pages/saranasiswa.php";
                     break;
+                    case 'saranasended';
+                    include "pages/saranasiswasended.php";
+                    break;
                 case 'prasarana';
                     include "pages/prasarana.php";
                     break;
@@ -298,7 +304,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2024 Layanan Pengaduan Digital | SMK NEGERI 6 KOTA BEKASI</p>
+        <p class="footer-content">&copy; 2024 Layanan Pengaduan Digital | SMK NEGERI 6 KOTA BEKASI</p>
     </footer>
 </body>
 </html>

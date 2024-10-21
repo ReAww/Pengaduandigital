@@ -154,38 +154,42 @@
             Belum punya akun? <a href="index.php?page=registersiswa">Daftar di sini</a>
         </div>
 
-        <?php        
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "pengaduandigital";
+        <?php
 
-        $conn = new mysqli($servername, $username, $password, $dbname);
 
-        if ($conn->connect_error) {
-            die("Koneksi gagal: " . $conn->connect_error);
-        }
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "pengaduandigital";
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $username = $conn->real_escape_string($_POST['username']);
-            $password = $conn->real_escape_string($_POST['password']);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-            $sql = "SELECT * FROM siswa WHERE username = '$username' AND password = '$password'";
-            $result = $conn->query($sql);
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
 
-            if ($result->num_rows > 0) {
-                echo "<p class='success-message'>Login berhasil</p>";
-                echo "<script>
-                window.location.href = 'indexsiswa.php';
-                </script>";
-                exit();
-            } else {
-                echo "<p class='error-message'>Username atau password salah</p>";
-            }
-        }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $conn->real_escape_string($_POST['username']);
+    $password = $conn->real_escape_string($_POST['password']);
 
-        $conn->close();        
-        ?>
+    $sql = "SELECT * FROM siswa WHERE username = '$username' AND password = '$password'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc(); // Ambil data siswa
+        $_SESSION['nis'] = $row['nis']; // Simpan NIS ke dalam session
+        echo "<p class='success-message'>Login berhasil</p>";
+        echo "<script>
+        window.location.href = 'indexsiswa.php';
+        </script>";
+       
+    } else {
+        echo "<p class='error-message'>Username atau password salah</p>";
+    }
+}
+
+$conn->close();
+?>
     </div>
 </body>
 </html>

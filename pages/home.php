@@ -128,9 +128,9 @@
     <div class="page">
         <div class="slider-container">
             <div class="slider-wrapper">
-                <img src="images/slider1.jpg" alt="Fasilitas Sekolah" class="slider-image">
-                <img src="images/slider2.jpg" alt="Kegiatan Belajar" class="slider-image">
-                <img src="images/slider3.jpg" alt="Prestasi Siswa" class="slider-image">
+                <img src="assets/images/slider1.jpg" alt="Fasilitas Sekolah" class="slider-image">
+                <img src="assets/images/slider2.jpg" alt="Kegiatan Belajar" class="slider-image">
+                <img src="assets/images/slider3.jpg" alt="Prestasi Siswa" class="slider-image">
             </div>
             <div class="slider-nav">
                 <button class="prev" onclick="changeSlide(-1)">&lt;</button>

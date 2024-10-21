@@ -115,7 +115,7 @@
             if ($conn->query($sql) === TRUE) {
                     echo "<div class='message success'>Pendaftaran berhasil!</div>";
                     echo "<script>
-                    window.location.href = 'index.php?page=home';
+                    window.location.href = 'index.php?page=loginsiswa';
                     </script>";
             } else {
                 echo "<div class='message error'>Error: " . $sql . "<br>" . $conn->error . "</div>";

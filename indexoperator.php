@@ -1,3 +1,22 @@
+<?php
+session_start();
+include 'koneksi.php'; // Include your database connection file
+
+// Fetch user name if logged in
+if (isset($_SESSION['nama_petugas'])) {
+    $userId = $_SESSION['id_petugas'];
+
+    $sql = "SELECT nama_petugas FROM petugas WHERE id_petugas = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $userId);    
+    $stmt->execute();
+    $stmt->bind_result($nama_petugas);
+    $stmt->fetch();
+    $stmt->close();
+} else {
+    $name = "Guest"; // Default name if not logged in
+}
+?>
 
 <!DOCTYPE html>
 <html lang="id">
@@ -196,12 +215,12 @@
     }
     p.welcome-message{
         font-weight: bolder; 
-        font-size: 34px;
+        font-size: 24px;
     }
 
     .main-content {
         max-width: 1200px;
-        margin: 2rem auto;
+        margin: 2rem auto 8rem;
         padding: 2rem;
         background-color: #fff;
         border-radius: 8px;
@@ -239,29 +258,30 @@
 
 </head>
 <body>
-    <header>
+<header>
         <div class="header-content">
             <div class="logo">
-                <img src="images/logo6.png" alt="Logo">
+                <img src="assets/images/logo6.png" alt="Logo">
                 <div class="logo-text">
                     <span class="title">PENGADUAN DIGITAL</span>
                     <span class="desc">SMK NEGERI 6 KOTA BEKASI</span>
-                    <p class="welcome-message">Hello, Selamat datang Petugas!</p>
+                    <p class="welcome-message">Hello, Selamat datang <?php echo htmlspecialchars($nama_petugas); ?>!</p>
                 </div>
             </div>
             <i class="fas fa-bell"></i>
         </div>
     </header>
 
+
     <nav class="navbar">
         <div class="nav-content">
             <div class="nav-links">
-                <a href="indexpetugas.php"><i class="fas fa-home"></i> Beranda</a>
-                <a href="indexpetugas.php?page=kontak"><i class="fas fa-address-book"></i> Kontak</a>
+                <a href="indexoperator.php"><i class="fas fa-home"></i> Beranda</a>
+                <a href="indexoperator.php?page=kontak"><i class="fas fa-address-book"></i> Kontak</a>
                 <div class="dropdown">
                     <a href="#" class="dropbtn"><i class="fas fa-edit"></i> Pengaduan</a>
                     <div class="dropdown-content">
-                        <a href="indexpetugas.php?page=sarana"><i class="fas fa-tools"></i> Pengaduan Sarana</a>
+                        <a href="indexoperator.php?page=sarana"><i class="fas fa-tools"></i> Pengaduan Sarana</a>
                         <a href="#menu2"><i class="fas fa-building"></i> Pengaduan Prasarana</a>
                         <a href="#menu3"><i class="fas fa-book"></i> Pengaduan KBM</a>
                     </div>
@@ -296,6 +316,12 @@
                     break;
                 case 'kbm';
                     include "pages/kbm.php";
+                    break;
+                    case 'respon';
+                    include "pages/responoperator.php";
+                    break;
+                    case 'selesaitanggapan';
+                    include "pages/selesaitanggapanop.php";
                     break;
             }
         } else {

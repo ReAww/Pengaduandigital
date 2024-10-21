@@ -1,9 +1,15 @@
+<!-- Buat file pengaduan.php -->
 <?php
-session_start();
-include 'koneksi.php';
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "pengaduandigital";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
 
 if(isset($_POST['submit'])) {
-    $tgl_pengaduan = date('Y-m-d');
+    $tgl_pengaduan = date( 'Y-m-d');
     $nis = $_SESSION['nis'];
     $isi_laporan = $_POST['isi_laporan'];
     
@@ -11,15 +17,15 @@ if(isset($_POST['submit'])) {
     $foto = $_FILES['foto']['name'];
     $tmp = $_FILES['foto']['tmp_name'];
     $fotobaru = date('dmYHis').$foto;
-    $path = "images/".$fotobaru;
+    $path = "assets/images-uploaded".$foto;
     
     if(move_uploaded_file($tmp, $path)) {
         $sql = "INSERT INTO pengaduan (tgl_pengaduan, nis, isi_laporan, foto, status) 
-                VALUES ('$tgl_pengaduan', '$nis', '$isi_laporan', '$fotobaru', '0')";
-        $query = mysqli_query($koneksi, $sql);
+                VALUES ('$tgl_pengaduan', '$nis', '$isi_laporan', '$foto', 'Pending')";
+        $query = mysqli_query($conn, $sql);
         
         if($query) {
-            echo "<script>alert('Pengaduan berhasil dikirim!');window.location='pengaduan.php';</script>";
+            echo "<script>window.location='indexsiswa.php?page=saranasended';</script>";
         } else {
             echo "<script>alert('Gagal mengirim pengaduan!');</script>";
         }
@@ -192,7 +198,7 @@ if(isset($_POST['submit'])) {
 <body>
     <div class="container">
         <!-- Form Pengaduan -->
-        <div class="card animate__animated animate__fadeIn">
+        <div class="card animate_animated animate_fadeIn">
             <div class="card-header">
                 <i class="fas fa-edit me-2"></i> Form Pengaduan Sarana
             </div>
@@ -214,7 +220,7 @@ if(isset($_POST['submit'])) {
         </div>
 
         <!-- Tabel Riwayat Pengaduan -->
-        <div class="card animate__animated animate__fadeIn">
+        <div class="card animate_animated animate_fadeIn">
             <div class="card-header">
                 <i class="fas fa-history me-2"></i> Riwayat Pengaduan
             </div>
@@ -235,7 +241,7 @@ if(isset($_POST['submit'])) {
                             <?php
                             $no = 1;
                             $nis = $_SESSION['nis'];
-                            $query = mysqli_query($koneksi, "SELECT * FROM pengaduan WHERE nis='$nis' ORDER BY id_pengaduan DESC");
+                            $query = mysqli_query($conn, "SELECT * FROM pengaduan WHERE nis='$nis' ORDER BY id_pengaduan DESC");
                             while($data = mysqli_fetch_array($query)) {
                             ?>
                             <tr>
@@ -244,13 +250,13 @@ if(isset($_POST['submit'])) {
                                 <td><?= $data['nis']; ?></td>
                                 <td><?= $data['isi_laporan']; ?></td>
                                 <td>
-                                    <img src="images/<?= $data['foto']; ?>" width="100">
+                                    <img src="assets/images-uploaded/<?= $data['foto']; ?>" width="100">
                                 </td>
                                 <td>
                                     <?php
-                                    if($data['status'] == '0') {
+                                    if($data['status'] == 'Pending') {
                                         echo "<span class='status status-pending'>Pending</span>";
-                                    } elseif($data['status'] == 'proses') {
+                                    } elseif($data['status'] == 'Proses') {
                                         echo "<span class='status status-process'>Proses</span>";
                                     } else {
                                         echo "<span class='status status-done'>Selesai</span>";
@@ -286,4 +292,4 @@ if(isset($_POST['submit'])) {
         });
     </script>
 </body>
-</html> 
+</html>

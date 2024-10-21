@@ -181,10 +181,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Menyimpan nama petugas di sesi
         session_start();
         $_SESSION['nama_petugas'] = $row['nama_petugas'];
+        $_SESSION['id_petugas'] = $row['id_petugas'];
         
         // Redirect ke halaman utama
         echo "<script>
-        window.location.href = 'indexpetugas.php';
+        window.location.href = 'indexoperator.php';
         </script>";
         exit();
     } else {
