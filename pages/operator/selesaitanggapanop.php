@@ -25,8 +25,6 @@ if (!$pengaduan) {
     die("Pengaduan tidak ditemukan.");
 }
 
-$showPopup = false; // Variabel untuk mengontrol tampilan pop-up
-
 // Proses penyelesaian tanggapan
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Ambil tanggapan dari form
@@ -93,7 +91,7 @@ mysqli_close($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selesaikan Tanggapan</title>
-    <link rel ="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .fade-in {
@@ -104,11 +102,64 @@ mysqli_close($conn);
                 opacity: 0;
             }
             to {
-                opacity : 1;
+                opacity: 1;
             }
         }
         .hover\:scale-105:hover {
-            transform: scale(1.05);
+            transform: scale(1.05 );
+        }
+        .drop-container {
+            position: relative;
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px dashed #555;
+            color: #444;
+            cursor: pointer;
+            transition: background .2s ease-in-out, border .2s ease-in-out;
+        }
+        .drop-container:hover,
+        .drop-container.drag-active {
+            background: #eee;
+            border-color: #111;
+        }
+        .drop-container:hover .drop-title,
+        .drop-container.drag-active .drop-title {
+            color: #222;
+        }
+        .drop-title {
+            color: #444;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            transition: color .2s ease-in-out;
+        }
+        input[type=file] {
+            width: 350px;
+            max-width: 100%;
+            color: #444;
+            padding: 5px;
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #555;
+        }
+        input[type=file]::file-selector-button {
+            margin-right: 20px;
+            border: none;
+            background: #084cdf;
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+            transition: background .2s ease-in-out;
+        }
+        input[type=file]::file-selector-button:hover {
+            background: #0d45a5;
         }
     </style>
 </head>
@@ -117,7 +168,7 @@ mysqli_close($conn);
     <div class="container mx-auto px-4 py-8 fade-in">
         <div class="bg-white rounded-lg shadow-md p-6 mb-6">
             <h1 class="text-2xl font-bold mb-4">
-                <i class="fas fa-check-circle mr -2"></i>
+                <i class="fas fa-check-circle mr-2"></i>
                 Selesaikan Tanggapan
             </h1>
             <div class="mb-4">
@@ -133,7 +184,7 @@ mysqli_close($conn);
                         
                         <?php
                         // Create the structured filename
-                        $structured_name = "images-uploaded".htmlspecialchars($pengaduan['foto']);        
+                        $structured_name = "images-uploaded/".htmlspecialchars($pengaduan['foto']);        
                         ?>
                         <img src="./assets/<?php echo $structured_name; ?>" alt="file foto">
                         <a href="assets/<?php echo $structured_name; ?>" download class="inline-flex mt-10 items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 transition-all duration-200 transform hover:scale-105">
@@ -145,42 +196,49 @@ mysqli_close($conn);
                 </div>
             </div>
             <form method="post" enctype="multipart/form-data">
-            
                 <div class="mb-4">
                     <label for="tanggapan" class="block mb-2">Tanggapan:</label>
                     <textarea id="tanggapan" name="tanggapan" class="w-full p-4 border rounded-lg" required></textarea>
                 </div>
                 <div class="mb-4">
-                    <label for="file" class="block mb-2">Unggah File:</label>
-                    <input type="file" id="file" name="file" class="w-full p-4 border rounded-lg" required>
+                    <label for="file" class="drop-container" id="dropcontainer">
+                        <span class="drop-title">Drop files here</span>
+                        or
+                        <input type="file" id="images" name="file" accept="image/*" required>
+                    </label>
                 </div>
-                <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors hover:scale-105">
+                <button type="submit" class=" px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors hover:scale-105">
                     <i class="fas fa-check mr-2"></i> Selesaikan
                 </button>
                 <a href="indexoperator.php?page=sarana" class="ml-2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors hover:scale-105">
                     <i class="fas fa-arrow-left mr-2"></i> Kembali
                 </a>
             </form>
-
-            <?php if ($showPopup): ?>
-                <div class="fixed top-0 left-0 w-full h-screen bg-gray-500 bg-opacity-50 flex justify-center items-center">
-                    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                        <h2 class="font-bold mb-4">Pengaduan Telah Selesai di Tanggapi</h2>
-                        <i class="fas fa-check-circle text-green-600 text-4xl animate-bounce"></i>
-                        <p class="text-gray-600">Tanggapan telah berhasil dikirim.</p>
-                        <button class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors hover:scale-105" onclick=" closePopup()">Tutup</button>
-                    </div>
-                </div>
-            <?php endif; ?>
         </div>
     </div>
 
     <script>
-        function closePopup() {
-            document.querySelector('.fixed').style.display = 'none';
-        }
+        const dropContainer = document.getElementById("dropcontainer")
+        const fileInput = document.getElementById("images")
 
-        setTimeout(closePopup, 15000); // Tutup pop-up setelah 15 detik
+        dropContainer.addEventListener("dragover", (e) => {
+            // prevent default to allow drop
+            e.preventDefault()
+        }, false)
+
+        dropContainer.addEventListener("dragenter", () => {
+            dropContainer.classList.add("drag-active")
+        })
+
+        dropContainer.addEventListener("dragleave", () => {
+            dropContainer.classList.remove("drag-active")
+        })
+
+        dropContainer.addEventListener("drop", (e) => {
+            e.preventDefault()
+            dropContainer.classList.remove("drag-active")
+            fileInput.files = e.dataTransfer.files
+        })
     </script>
 </body>
 </html>

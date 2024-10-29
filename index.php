@@ -6,16 +6,19 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/7d4bff396b.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <title>Pengaduan Digital - SMK Negeri 6 Kota Bekasi</title>
     <style>
         * {
-            box-sizing: border-box;
+            box-sizing: border-box;            
             margin: 0;
             padding: 0;
         }
 
         body {
-            font-family: 'Roboto', Arial, sans-serif;
+            font-family: "Poppins", sans-serif;
             line-height: 1.6;
             color: #333;
             background-color: #f4f4f4;
@@ -202,10 +205,8 @@ session_start();
         .main-content {
             max-width: 1200px;
             margin: 2rem auto;
-            padding: 2rem;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;            
+            border-radius: 8px;            
             transition: all 0.3s ease-in-out;
         }
 

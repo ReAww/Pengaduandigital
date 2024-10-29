@@ -1,3 +1,0 @@
-<div clas="page">
-
-</div>

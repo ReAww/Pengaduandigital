@@ -10,13 +10,13 @@ session_start();
     <title>Pengaduan Digital - SMK Negeri 6 Kota Bekasi</title>
     <style>
     * {
-        box-sizing: border-box;
+        box-sizing: border-box;        
         margin: 0;
         padding: 0;
     }
 
     body {
-        font-family: 'Roboto', Arial, sans-serif;
+        font-family: "Poppins", sans-serif;
         line-height: 1.6;
         color: #333;
         background-color: #f4f4f4;
@@ -47,8 +47,8 @@ session_start();
     }
 
     .logo img {
-        width: 50px;
-        height: 50px;
+        width: 100px;
+        height: 100px;
         margin-right: 10px;
         transition: all 0.3s ease-in-out;
     }
@@ -60,14 +60,14 @@ session_start();
     }
 
     .logo-text .title {
-        font-size: 18px;
+        font-size: 24px;
         font-weight: bold;
         color: #333;
         transition: all 0.3s ease-in-out;
     }
 
     .logo-text .desc {
-        font-size: 14px;
+        font-size: 18px;
         color: #666;
         transition: all 0.3s ease-in-out;
     }
@@ -258,7 +258,7 @@ session_start();
                     <a href="#" class="dropbtn"><i class="fas fa-edit"></i> Pengaduan</a>
                     <div class="dropdown-content">
                         <a href="indexsiswa.php?page=sarana"><i class="fas fa-tools"></i> Pengaduan Sarana</a>
-                        <a href="#menu2"><i class="fas fa-building"></i> Pengaduan Prasarana</a>
+                        <a href="indexsiswa.php?page=prasarana"><i class="fas fa-building"></i> Pengaduan Prasarana</a>
                         <a href="#menu3"><i class="fas fa-book"></i> Pengaduan KBM</a>
                     </div>
                 </div>
@@ -285,16 +285,19 @@ session_start();
                     include "pages/kontak.php";
                     break;
                 case 'sarana';
-                    include "pages/saranasiswa.php";
+                    include "pages/siswa/saranasiswa.php";
                     break;
-                    case 'saranasended';
-                    include "pages/saranasiswasended.php";
+                case'viewsarana';
+                    include "pages/viewsarana.php";
                     break;
-                case 'prasarana';
-                    include "pages/prasarana.php";
+                    case 'prasarana';
+                    include "pages/siswa/prasaranasiswa.php";
                     break;
-                case 'kbm';
+                    case 'kbm';
                     include "pages/kbm.php";
+                    break;
+                    case 'sended';
+                    include "pages/sended.php";
                     break;
             }
         } else {

@@ -27,13 +27,13 @@ if (isset($_SESSION['nama_petugas'])) {
     <title>Pengaduan Digital - SMK Negeri 6 Kota Bekasi</title>
     <style>
     * {
-        box-sizing: border-box;
+        box-sizing: border-box;        
         margin: 0;
         padding: 0;
     }
 
-    body {
-        font-family: 'Roboto', Arial, sans-serif;
+    body {        
+        font-family: "Poppins", sans-serif;
         line-height: 1.6;
         color: #333;
         background-color: #f4f4f4;
@@ -282,7 +282,7 @@ if (isset($_SESSION['nama_petugas'])) {
                     <a href="#" class="dropbtn"><i class="fas fa-edit"></i> Pengaduan</a>
                     <div class="dropdown-content">
                         <a href="indexoperator.php?page=sarana"><i class="fas fa-tools"></i> Pengaduan Sarana</a>
-                        <a href="#menu2"><i class="fas fa-building"></i> Pengaduan Prasarana</a>
+                        <a href="indexoperator.php?page=prasarana"><i class="fas fa-building"></i> Pengaduan Prasarana</a>
                         <a href="#menu3"><i class="fas fa-book"></i> Pengaduan KBM</a>
                     </div>
                 </div>
@@ -309,19 +309,22 @@ if (isset($_SESSION['nama_petugas'])) {
                     include "pages/kontak.php";
                     break;
                 case 'sarana';
-                    include "pages/saranaoperator.php";
+                    include "pages/operator/saranaoperator.php";
                     break;
                 case 'prasarana';
-                    include "pages/prasarana.php";
+                    include "pages/operator/prasaranaop.php";
                     break;
                 case 'kbm';
                     include "pages/kbm.php";
                     break;
                     case 'respon';
-                    include "pages/responoperator.php";
+                    include "pages/operator/responoperator.php";
                     break;
                     case 'selesaitanggapan';
-                    include "pages/selesaitanggapanop.php";
+                    include "pages/operator/selesaitanggapanop.php";
+                    break;
+                    case 'view';
+                    include "pages/viewsarana.php";
                     break;
             }
         } else {
